@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:clipboard/clipboard.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:ocr_voice_app/Screens/homepage.dart';
 
 class RecognizePage extends StatefulWidget {
   final String? path;
@@ -33,6 +35,18 @@ class _RecognizePageState extends State<RecognizePage> {
         backgroundColor: Colors.grey[400],
         appBar: AppBar(
           centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+                 Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                            builder: (_) => const HomePage(
+                           ),
+                      ),
+                    );
+            },
+            icon: const Icon(Icons.back_hand),
+          ),
           actions: [
          IconButton(
           onPressed: () {

@@ -8,6 +8,8 @@ import 'package:ocr_voice_app/Screens/recongnization_page.dart';
 import 'package:ocr_voice_app/Utilis/image_crooper_page.dart';
 import 'package:ocr_voice_app/Utilis/image_picker_class.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../Widgets/alertdialogone.dart';
+import '../Widgets/alertdialogtwo.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -154,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                             size: 70,
                             ),
                       SizedBox(height: 10,),
-                            Text("Listen to text ",
+                            Text("Pdf to sound ",
                         style: TextStyle(color: Colors.white,
                         fontSize: 14,
                       fontWeight: FontWeight.bold
@@ -168,25 +170,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                       GestureDetector(
                         onTap: () {
-                    
-                       pickImage(source: ImageSource.camera).then((value) {
-                          if(value != '') {
-                        
-                           Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                            builder: (_) => RecognizePage(
-                             path: value,
-                           
-                           ),
-                      ),
-                    );
-                  }
-                        });
-                        
                        
-                          },
+                       showDialog(
+                     barrierDismissible: false,
+                      context: context,
+                     builder: (context) => const AlertDialogOne(),
+                     ).then((value) {
+                     setState(() {});
+                         });
                         
+                        },
                       child: Card(
                         shadowColor: Colors.blue,
                         shape: RoundedRectangleBorder(
@@ -204,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                             size: 70,
                             ),
                       SizedBox(height: 10,),
-                            Text("camera image ",
+                            Text("camera image to text ",
                         style: TextStyle(color: Colors.white,
                         fontSize: 14,
                       fontWeight: FontWeight.bold
@@ -220,22 +213,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                          GestureDetector(
                           onTap: () {
-                       pickImage(source: ImageSource.gallery).then((value) {
-                          if(value != '') {
-                        imageCropperView(value, context).then((value) {
-                         if (value != '') {
-                           Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                            builder: (_) => RecognizePage(
-                             path: value,
-                        ),
-                      ),
-                    );
-                  }
+                       
+                           showDialog(
+                     barrierDismissible: false,
+                       context: context,
+                builder: (context) => const AlertDialogTwo(),
+                       ).then((value) {
+                  setState(() {});
                         });
-                          }
-                       });
+
                           },
                         child: Card(               
                           color: Colors.black,
@@ -253,7 +239,7 @@ class _HomePageState extends State<HomePage> {
                               size: 70,
                               ),
                         SizedBox(height: 10,),
-                              Text(" Gallery Image ",
+                              Text("Gallery Image to text ",
                           style: TextStyle(color: Colors.white,
                           fontSize: 14,
                         fontWeight: FontWeight.bold
@@ -281,12 +267,12 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.all(15),
                           child: Column(
                             children: const [
-                              Icon(Icons.mic,
+                              Icon(Icons.file_copy,
                               color: Colors.white,
                               size: 80,
                               ),
                              SizedBox(height: 10,),
-                              Text("Listen to text ",
+                              Text("Image to Pdf",
                           style: TextStyle(color: Colors.white,
                           fontSize: 14,
                             fontWeight: FontWeight.bold
@@ -298,6 +284,7 @@ class _HomePageState extends State<HomePage> {
                                         
                          )
                        ),
+          
                   )
                 ],
 

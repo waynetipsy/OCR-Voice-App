@@ -120,7 +120,7 @@ class _ReadNoteState extends State<ReadNote> {
               controller.text = text;
 
                setState(() {
-           _isBusy = false;
+              _isBusy = false;
                });  
             }
           });
