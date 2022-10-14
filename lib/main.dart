@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ocr_voice_app/Screens/onboarding.dart';
 import 'package:provider/provider.dart';
 import './Screens/homepage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './provider/theme.provider.dart';
 
-Future main() async{
+int? initScreen;
+Future<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([  //To force portrait and prevent orientation change
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
+  
+   SharedPreferences prefs = await SharedPreferences.getInstance(); 
+  initScreen = await prefs.getInt("initScreen");
+  await prefs.setInt("initScreen", 1);
+  print('initScreen ${initScreen}');
 
   runApp(const MyApp());
 }
@@ -32,7 +39,11 @@ class MyApp extends StatelessWidget {
       darkTheme: MyThemes.darkTheme,
       themeMode: themeProvider.themeMode,
       debugShowCheckedModeBanner: false,
-      home: const HomePage()
+      initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
+      routes: {
+        '/': (context) => const HomePage(),
+        "first":(context) => const Onboarding()
+      },
       );
      }
     );

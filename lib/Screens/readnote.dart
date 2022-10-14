@@ -131,7 +131,7 @@ class _ReadNoteState extends State<ReadNote> {
           }
           });
         },
-        label:  Text('pick pdf file',
+        label: const Text('pick pdf file',
         style: TextStyle(
           color: Colors.red
           ),

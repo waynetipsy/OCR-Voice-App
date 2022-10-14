@@ -41,7 +41,7 @@ class _AlertDialogOneState extends State<AlertDialogOne> {
                        pickImage(source: ImageSource.camera).then((value) {
                           if(value != '') {
                         
-                           Navigator.push(
+                           Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
                             builder: (_) => RecognizePage(
