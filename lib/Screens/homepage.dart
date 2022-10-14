@@ -1,15 +1,17 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import '../provider/theme.provider.dart';
+import 'package:ocr_voice_app/Screens/pdfmaker.dart';
+import '../Utilis/text.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:ocr_voice_app/Screens/readnote.dart';
-import 'package:ocr_voice_app/Screens/recongnization_page.dart';
-import 'package:ocr_voice_app/Utilis/image_crooper_page.dart';
-import 'package:ocr_voice_app/Utilis/image_picker_class.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:share_plus/share_plus.dart';
 import '../Widgets/alertdialogone.dart';
 import '../Widgets/alertdialogtwo.dart';
+import '../Screens/appdrawer.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -20,6 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+
   Future showToast(String message) async{
   await Fluttertoast.cancel();
 
@@ -29,20 +33,26 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
+   final themeProvider = Provider.of<ThemeProvider>(context);
+
+   final text = MediaQuery.of(context).platformBrightness == Brightness.dark
+     ? 'DarkTheme' 
+     : 'LightTheme';
+
     return Scaffold(
        
-      backgroundColor: Colors.grey[300],
+     // backgroundColor: themeProvider.themeMode,
       appBar: AppBar(
         //title: const Text("Home"),
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.black,
         elevation: 0,
-        leading: const Icon(Icons.menu,
-        color: Colors.black,
+        
         ),
         
-      ),
+      
+      drawer: const AppDrawer(),
 
-    /*  floatingActionButton: 
+     /* floatingActionButton: 
         SpeedDial(
          animatedIcon: AnimatedIcons.menu_close,
          backgroundColor: Colors.black,
@@ -52,26 +62,24 @@ class _HomePageState extends State<HomePage> {
          spacing: 20,
          spaceBetweenChildren: 12,
          //closeManually: true,
-         onOpen: () => showToast('Opened...'),
-         onClose: () => showToast("Closed..."),
          children: [
           SpeedDialChild(
-            child: const Icon(Icons.read_more_rounded),
+            child: const Icon(Icons.share),
             elevation: 30,
-            labelWidget: labelDesign(Colors.green, 'Read Note'),
+            labelWidget: labelDesign(Colors.green, 'Share App'),
             backgroundColor: Colors.green,
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ReadNote()));
+                Share.share(TextHelper.appUrl);
             },
           
            ),
             SpeedDialChild(
-            child: const Icon(Icons.voice_over_off),
+            child: const Icon(Icons.logout),
             backgroundColor: Colors.amberAccent,
             onTap: () {
-              
+              SystemNavigator.pop();
             },
-            labelWidget: labelDesign(Colors.blue, 'Voice'),
+            labelWidget: labelDesign(Colors.blue, 'Close App'),
             labelBackgroundColor: Colors.amber,
             
             )
@@ -100,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                     ),
                     width: double.infinity,
-                    height: 140,
+                    height: 120,
                     child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                   children:const [
@@ -116,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 20,
                       )
                     ),
                   ],
@@ -134,10 +142,11 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const ReadNote()
-                   )
-                 );
+                      Navigator.of(context).push(MaterialPageRoute(
+                       builder: (context) => 
+                       const PdfMarker(),
+                       ));
+
                       },
                       child: Card(
                         shadowColor: Colors.blue,
@@ -151,12 +160,12 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(15),
                         child: Column(
                           children: const [
-                            Icon(Icons.mic,
+                            Icon(Icons.file_copy,
                             color: Colors.white,
-                            size: 70,
+                            size: 65,
                             ),
                       SizedBox(height: 10,),
-                            Text("Pdf to sound ",
+                            Text("Picture to Pdf",
                         style: TextStyle(color: Colors.white,
                         fontSize: 14,
                       fontWeight: FontWeight.bold
@@ -192,12 +201,12 @@ class _HomePageState extends State<HomePage> {
                          padding: const EdgeInsets.all(15),
                         child: Column(
                           children: const [
-                            Icon(Icons.camera,
+                            Icon(CupertinoIcons.camera,
                             color: Colors.white,
-                            size: 70,
+                            size: 65,
                             ),
                       SizedBox(height: 10,),
-                            Text("camera image to text ",
+                            Text("Camera to Text ",
                         style: TextStyle(color: Colors.white,
                         fontSize: 14,
                       fontWeight: FontWeight.bold
@@ -213,15 +222,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                          GestureDetector(
                           onTap: () {
-                       
-                           showDialog(
-                     barrierDismissible: false,
-                       context: context,
-                builder: (context) => const AlertDialogTwo(),
-                       ).then((value) {
-                  setState(() {});
-                        });
 
+                            showDialog(
+                         barrierDismissible: false,
+                         context: context,
+                         builder: (context) => const AlertDialogTwo(),
+                        ).then((value) {
+                        setState(() {});
+                         });
+                       
                           },
                         child: Card(               
                           color: Colors.black,
@@ -236,10 +245,10 @@ class _HomePageState extends State<HomePage> {
                             children: const [
                               Icon(Icons.image,
                               color: Colors.white,
-                              size: 70,
+                              size: 65,
                               ),
                         SizedBox(height: 10,),
-                              Text("Gallery Image to text ",
+                              Text("Image to Text ",
                           style: TextStyle(color: Colors.white,
                           fontSize: 14,
                         fontWeight: FontWeight.bold
@@ -254,7 +263,10 @@ class _HomePageState extends State<HomePage> {
                         
                          GestureDetector (
                           onTap: () {
-
+                          Navigator.of(context).push(MaterialPageRoute(
+                       builder: (context) => 
+                       const ReadNote(),
+                       ));
                           },
                           child: Card(
                           shape: RoundedRectangleBorder(
@@ -269,10 +281,10 @@ class _HomePageState extends State<HomePage> {
                             children: const [
                               Icon(Icons.file_copy,
                               color: Colors.white,
-                              size: 80,
+                              size: 65,
                               ),
                              SizedBox(height: 10,),
-                              Text("Image to Pdf",
+                              Text("Text to Sound",
                           style: TextStyle(color: Colors.white,
                           fontSize: 14,
                             fontWeight: FontWeight.bold

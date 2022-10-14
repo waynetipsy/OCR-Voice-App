@@ -1,30 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../Screens/recongnization_page.dart';
-import '../Utilis/image_picker_class.dart';
+
    
 
-class AlertDialogOne extends StatefulWidget {
-  const AlertDialogOne({super.key});
+class AlertDialogThree extends StatefulWidget {
+  const AlertDialogThree({super.key});
 
   @override
-  State<AlertDialogOne> createState() => _AlertDialogOneState();
+  State<AlertDialogThree> createState() => _AlertDialogThreeState();
 }
 
-class _AlertDialogOneState extends State<AlertDialogOne> {
+class _AlertDialogThreeState extends State<AlertDialogThree> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      
           shape: RoundedRectangleBorder(
               borderRadius:
               BorderRadius.circular(20.0)
               ),
 
-          title: const Text("Do you want to access camera?"),
-          content: const Text("Phone Camera 📷"),
+          title: const Text("Do you want to close App?"),
+          content: const Text("Text deck App 📱"),
 
           actions: <Widget>[
 
@@ -37,21 +36,8 @@ class _AlertDialogOneState extends State<AlertDialogOne> {
                 color: Colors.blue,
                 child: const Text("Yes"),
                 onPressed: () {
-                    
-                       pickImage(source: ImageSource.camera).then((value) {
-                          if(value != '') {
-                        
-                           Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                            builder: (_) => RecognizePage(
-                             path: value,
-                           
-                           ),
-                      ),
-                    );
+                     SystemNavigator.pop();    
                   }
-                       });                },
               ),
             ),
 

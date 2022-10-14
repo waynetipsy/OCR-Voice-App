@@ -17,7 +17,6 @@ class _AlertDialogTwoState extends State<AlertDialogTwo> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.grey[400],
           shape: RoundedRectangleBorder(
               borderRadius:
               BorderRadius.circular(20.0)
@@ -41,7 +40,7 @@ class _AlertDialogTwoState extends State<AlertDialogTwo> {
                        pickImage(source: ImageSource.gallery).then((value) {
                           if(value != '') {
                         
-                           Navigator.push(
+                           Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
                             builder: (_) => RecognizePage(

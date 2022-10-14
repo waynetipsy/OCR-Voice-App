@@ -32,7 +32,7 @@ class _RecognizePageState extends State<RecognizePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[400],
+        //backgroundColor: Colors.grey[400],
         appBar: AppBar(
           centerTitle: true,
           leading: IconButton(
@@ -45,7 +45,7 @@ class _RecognizePageState extends State<RecognizePage> {
                       ),
                     );
             },
-            icon: const Icon(Icons.back_hand),
+            icon: const Icon(Icons.arrow_back),
           ),
           actions: [
          IconButton(
@@ -55,8 +55,9 @@ class _RecognizePageState extends State<RecognizePage> {
          },
          icon: const Icon(
           Icons.content_copy,
+          color: Colors.blue,
              ),
-             iconSize: 30,
+             iconSize: 25,
             ),
           ],
           backgroundColor: Colors.black,
@@ -65,10 +66,10 @@ class _RecognizePageState extends State<RecognizePage> {
             ),
           ),
         body: _isBusy == true
-            ? const Center(
+            ?  Center(
                 child: CircularProgressIndicator(
                   strokeWidth: 6,
-                  color: Colors.black,
+                  color: Theme.of(context).primaryColor,
                 ),
               )
             : Container(

@@ -5,7 +5,7 @@ Future<String> pickDocument() async {
 
    FilePickerResult? result = await FilePicker.platform.pickFiles(
     type: FileType.custom,
-    allowedExtensions: ['pdf','jpg'],
+    allowedExtensions: ['pdf'],
     allowCompression: true
    );
    if (result != null) {

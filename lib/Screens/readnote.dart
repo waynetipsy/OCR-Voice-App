@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:flutter/cupertino.dart';
 import '../Utilis/pick_document.dart';
 import 'package:pdf_text/pdf_text.dart';
 
@@ -38,7 +38,7 @@ class _ReadNoteState extends State<ReadNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      //backgroundColor: Colors.grey[300],
       appBar: AppBar(
         
         elevation: 0,
@@ -48,22 +48,22 @@ class _ReadNoteState extends State<ReadNote> {
         ),
         actions: [
           IconButton(
-            iconSize: 30,
+            iconSize: 2,
             color: Colors.red,
             onPressed: (){
             controller.clear();
             
           },
-           icon:const Icon(Icons.delete)
+           icon:const Icon(CupertinoIcons.delete)
            ),
           IconButton(
-            iconSize: 30,
+            iconSize: 25,
             color: Colors.white,
             onPressed:() {
               //stop
               stop();
             } ,
-            icon: const Icon(Icons.stop)
+            icon: const Icon(CupertinoIcons.stop)
             ),
            IconButton(
             color: Colors.blue,
@@ -75,17 +75,17 @@ class _ReadNoteState extends State<ReadNote> {
                 Fluttertoast.showToast(msg: 'playing text');
               },
               icon: const Icon(
-                Icons.mic,
-                size: 30,
+                CupertinoIcons.mic,
+                size: 25,
               )
               ),
         ],
       ),
       body: _isBusy == true
-         ? const Center(
+         ?  Center(
           child: CircularProgressIndicator(
             strokeWidth: 6,
-            color: Colors.black,
+            color: Theme.of(context).primaryColor,
           ),
         )
       
@@ -102,7 +102,7 @@ class _ReadNoteState extends State<ReadNote> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           pickDocument().then((value) async {
             debugPrint(value);
@@ -121,11 +121,21 @@ class _ReadNoteState extends State<ReadNote> {
 
                setState(() {
               _isBusy = false;
-               });  
-            }
+            } 
+               
+               );  
+          } else {
+            
+         return Fluttertoast.showToast(msg: 'Invalid Pdf file');
+          
+          }
           });
         },
-        label: const Text('pick pdf file')
+        label:  Text('pick pdf file',
+        style: TextStyle(
+          color: Colors.red
+          ),
+          )
         ),
     );
 
