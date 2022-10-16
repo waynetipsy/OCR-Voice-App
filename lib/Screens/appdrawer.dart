@@ -31,9 +31,15 @@ class AppDrawer extends StatelessWidget {
               ]),
             ),
             alignment: Alignment.bottomLeft,
-            child: const CircleAvatar(
-              backgroundImage: AssetImage('images/tic_game_logo.png'),
-              radius: 50,
+            child:  Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: AssetImage('assets/app_icon.png'),
+                fit: BoxFit.contain,
+              )
+            ),
             ),
           ),
           ListTile(

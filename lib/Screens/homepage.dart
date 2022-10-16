@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/theme.provider.dart';
 import 'package:ocr_voice_app/Screens/pdfmaker.dart';
-import '../Utilis/text.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:ocr_voice_app/Screens/readnote.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -142,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
                        builder: (context) => 
                        const PdfMarker(),
                        ));

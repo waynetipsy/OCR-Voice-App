@@ -22,7 +22,7 @@ class _AlertDialogThreeState extends State<AlertDialogThree> {
               BorderRadius.circular(20.0)
               ),
 
-          title: const Text("Do you want to close App?"),
+          title: const Text("Do you want to close this App?"),
           content: const Text("Text deck App 📱"),
 
           actions: <Widget>[

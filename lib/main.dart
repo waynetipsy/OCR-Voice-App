@@ -8,7 +8,7 @@ import './provider/theme.provider.dart';
 
 int? initScreen;
 Future<void> main() async{
-
+   
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([  //To force portrait and prevent orientation change
     DeviceOrientation.portraitUp,
@@ -17,7 +17,7 @@ Future<void> main() async{
   
    SharedPreferences prefs = await SharedPreferences.getInstance(); 
   initScreen = await prefs.getInt("initScreen");
-  await prefs.setInt("initScreen", 1);
+  await prefs.setInt("initScreen", 2);
   print('initScreen ${initScreen}');
 
   runApp(const MyApp());
@@ -39,11 +39,12 @@ class MyApp extends StatelessWidget {
       darkTheme: MyThemes.darkTheme,
       themeMode: themeProvider.themeMode,
       debugShowCheckedModeBanner: false,
-      initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
+      home: const Onboarding(),
+     /* initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
       routes: {
         '/': (context) => const HomePage(),
-        "first":(context) => const Onboarding()
-      },
+        "first":(context) => const Onboarding()  */
+      //},
       );
      }
     );

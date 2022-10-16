@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ocr_voice_app/Screens/homepage.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -76,24 +76,31 @@ class _OnboardingState extends State<Onboarding> {
                       onPressed: () {
                         _pageController.nextPage(
                           duration: const Duration(
-                          milliseconds: 300
-                          ),
+                          milliseconds: 300),
                           curve: Curves.ease,
+                           );
 
-                          );
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                       builder: (context) => const HomePage(),
+                          ));
                       },
                       style: ElevatedButton.styleFrom(
                          backgroundColor: Colors.black,
                         elevation: 8,
                         foregroundColor: Colors.blue,
                         
-                        shape: const CircleBorder()
+                        shape: const CircleBorder(
+                         
+                        )
                       ),
-                      child: const Icon(
-                        Icons.arrow_right,
-                        size: 40,
+                      child: const Text('Skip',
+                      
+                       style: TextStyle(
+                        fontSize: 10,
                         color: Colors.white
+                        ),
                       )
+                         
                       ),
                     ),
                  ],
@@ -119,8 +126,8 @@ class DotIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      height: isActive ? 12 : 4,
-      width: 4,
+      height: isActive ? 22 : 12,
+      width: 6,
       decoration: BoxDecoration(
         color: isActive ? Colors.white :
         Colors.black,
@@ -142,21 +149,21 @@ class DotIndicator extends StatelessWidget {
 
   final List<Onboard> demo_data = [
     Onboard(
-      image: '', 
+      image: "assets/camera_pic.png" ,
       title: 'Optical Character Recognition', 
-      description: 'Convert your image to text,from galley or camera capture'
+      description: ' This app uses OCR technology to extract text and characters from photos, and digital camera-captured images. '
       ),
       
       Onboard(
-      image: '', 
-      title: '', 
-      description: ''
+      image: "assets/pdf_files.png", 
+      title: 'PDF Maker', 
+      description: 'This app uses OCR technology to extract text and characters from photos, and digital camera-captured images. '
       ),
 
        Onboard(
-      image: '', 
-      title: '', 
-      description: ''
+      image: "assets/loud.png", 
+      title: 'Text to Speech', 
+      description: 'This app converts your Pdf documents and text documents to audio. Enjoy and listen to your favorite Pdf document and text while sleeping or on the road. '
       ),
   ];
 
@@ -174,16 +181,20 @@ class OnbordContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-       const Spacer(),
+       const SizedBox(height: 70),
+       //const Spacer(),
         Image.asset(image,
         height: 250,
         ),
-       const Spacer(),
+       const SizedBox(height: 25),
       Text(title,
       style: Theme.of(context).textTheme.headline5!
       .copyWith(fontWeight: FontWeight.w500),
         ),
+       const SizedBox(height: 20),
         Text(description,
+        style: TextStyle(
+          fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
         ),
         const Spacer(),
