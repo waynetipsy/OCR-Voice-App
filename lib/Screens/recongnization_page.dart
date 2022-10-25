@@ -38,9 +38,9 @@ class _RecognizePageState extends State<RecognizePage> {
           leading: IconButton(
             onPressed: () {
                  Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                            builder: (_) => const HomePage(
+                   context,
+               CupertinoPageRoute(
+               builder: (_) => const HomePage(
                            ),
                       ),
                     );

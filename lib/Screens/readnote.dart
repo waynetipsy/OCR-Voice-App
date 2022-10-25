@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../provider/read.provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import '../Utilis/pick_document.dart';
 import 'package:pdf_text/pdf_text.dart';
 
@@ -17,28 +18,11 @@ class _ReadNoteState extends State<ReadNote> {
 
   TextEditingController controller = TextEditingController();
 
-   FlutterTts tts = FlutterTts();
-
-   Future speak({String? text}) async{
-    await tts.setLanguage("en-US");
-    await tts.setSpeechRate(0.5);
-    await tts.setPitch(1);
-
-    try {
-      await tts.speak(text!);
-    } catch (e) {
-      debugPrint(e.toString()); 
-    }
-   }
-
-   void stop() async{
-    await tts.stop();
-   }
 
   @override
   Widget build(BuildContext context) {
+    final speak = Provider.of<SpeakProvider>(context);
     return Scaffold(
-      //backgroundColor: Colors.grey[300],
       appBar: AppBar(
         
         elevation: 0,
@@ -60,8 +44,8 @@ class _ReadNoteState extends State<ReadNote> {
             iconSize: 25,
             color: Colors.white,
             onPressed:() {
-              //stop
-              stop();
+              speak.stop();
+             //Provider.of<SpeakModel>(context).stop();
             } ,
             icon: const Icon(CupertinoIcons.stop)
             ),
@@ -69,7 +53,7 @@ class _ReadNoteState extends State<ReadNote> {
             color: Colors.blue,
               onPressed: () {
                 if (controller.text.isNotEmpty) {
-                  speak(text: controller.text.trim(),
+                  speak.speak(text: controller.text.trim(),
                   );
                 }
                 Fluttertoast.showToast(msg: 'playing text');

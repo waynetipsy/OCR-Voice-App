@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/cupertino.dart';
 import '../Widgets/alertdialogthree.dart';
@@ -13,10 +12,9 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      
-
     return Drawer(
       elevation: 40,
-     // backgroundColor: Colors.grey[400],
+     
       child: Column(
         children: [
           Container(
@@ -31,21 +29,16 @@ class AppDrawer extends StatelessWidget {
               ]),
             ),
             alignment: Alignment.bottomLeft,
-            child:  Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage('assets/app_icon.png'),
-                fit: BoxFit.contain,
+            child:  CircleAvatar(
+              radius: 35,
+              backgroundImage: AssetImage('assets/play_store.png'),
+              backgroundColor: Colors.white,
               )
-            ),
-            ),
           ),
           ListTile(
             onTap: () {
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/', (route) => false);
+                  .pushNamedAndRemoveUntil('home', (route) => false);
             },
             title: Text(
               'Main Menu',

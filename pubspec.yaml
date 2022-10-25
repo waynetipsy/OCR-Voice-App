@@ -49,6 +49,8 @@ dependencies:
   printing: ^5.6.0
   provider: ^6.0.2
   shared_preferences: ^2.0.15
+  google_mobile_ads: ^2.1.0
+  
   
   
 
@@ -56,6 +58,19 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.10.0
+  flutter_native_splash: ^2.2.12
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/play_store.png"
+  adaptive_icon_background: "#FFFFFFFF"
+  adaptive_icon_foreground: "assets/app_icons.png"  
+
+flutter_native_splash:
+  background_image: "assets/splash_background.png"
+  image: "assets/splash_icon.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

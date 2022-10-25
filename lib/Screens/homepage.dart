@@ -1,5 +1,8 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:ocr_voice_app/Model/ad_state.dart';
 import 'package:provider/provider.dart';
 import '../provider/theme.provider.dart';
 import 'package:ocr_voice_app/Screens/pdfmaker.dart';
@@ -21,28 +24,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-
   Future showToast(String message) async{
   await Fluttertoast.cancel();
 
   Fluttertoast.showToast(msg: message, fontSize: 18);
   }
 
+  BannerAd?  banner;
+  //bool _bannerIsLoaded = false;
+
+ @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final adState = Provider.of<AdState>(context);
+    adState.initialization.then((status) {
+      setState(() {
+        banner = BannerAd( 
+      size: AdSize.fullBanner, 
+      adUnitId:  AdState.bannerAdUnitId!,
+      listener: AdState.bannerAdListener,
+      request: const AdRequest(),
+       )..load();
+
+       //_bannerIsLoaded = true;
+      }
+      );
+      } 
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
-   final themeProvider = Provider.of<ThemeProvider>(context);
-
-   final text = MediaQuery.of(context).platformBrightness == Brightness.dark
-     ? 'DarkTheme' 
-     : 'LightTheme';
-
     return Scaffold(
        
-     // backgroundColor: themeProvider.themeMode,
       appBar: AppBar(
-        //title: const Text("Home"),
         backgroundColor: Colors.black,
         elevation: 0,
         
@@ -141,10 +157,8 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                       builder: (context) => 
-                       const PdfMarker(),
-                       ));
+                      Navigator.of(context).
+                      pushReplacementNamed('pdf');
 
                       },
                       child: Card(
@@ -156,14 +170,14 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black,
                       elevation: 8,
                       child: Container(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(23),
                         child: Column(
                           children: const [
                             Icon(Icons.file_copy,
                             color: Colors.white,
                             size: 65,
                             ),
-                      SizedBox(height: 10,),
+                      SizedBox(height: 15,),
                             Text("Picture to Pdf",
                         style: TextStyle(color: Colors.white,
                         fontSize: 14,
@@ -197,14 +211,14 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black,
                       elevation: 8,
                       child: Container(
-                         padding: const EdgeInsets.all(15),
+                         padding: const EdgeInsets.all(23),
                         child: Column(
                           children: const [
                             Icon(CupertinoIcons.camera,
                             color: Colors.white,
                             size: 65,
                             ),
-                      SizedBox(height: 10,),
+                      SizedBox(height: 15,),
                             Text("Camera to Text ",
                         style: TextStyle(color: Colors.white,
                         fontSize: 14,
@@ -239,33 +253,30 @@ class _HomePageState extends State<HomePage> {
                             shadowColor: Colors.blue,
                          elevation: 8,
                         child: Container(
-                         padding: const EdgeInsets.all(15),
+                         padding: const EdgeInsets.all(23),
                           child: Column(
                             children: const [
                               Icon(Icons.image,
                               color: Colors.white,
                               size: 65,
                               ),
-                        SizedBox(height: 10,),
+                        SizedBox(height: 15,),
                               Text("Image to Text ",
                           style: TextStyle(color: Colors.white,
                           fontSize: 14,
                         fontWeight: FontWeight.bold
-                          ),
-                         )
-                         ],
+                            ),
+                            )
+                           ],
                           ),
                                       
-                       )
+                        )
                        ),
                       ),
                         
                          GestureDetector (
                           onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                       builder: (context) => 
-                       const ReadNote(),
-                       ));
+                          Navigator.of(context).pushReplacementNamed('read');
                           },
                           child: Card(
                           shape: RoundedRectangleBorder(
@@ -275,14 +286,14 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.black,
                           elevation: 8,
                             child: Container(
-                          padding: const EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(23),
                           child: Column(
                             children: const [
                               Icon(Icons.file_copy,
                               color: Colors.white,
                               size: 65,
                               ),
-                             SizedBox(height: 10,),
+                             SizedBox(height: 15,),
                               Text("Text to Sound",
                           style: TextStyle(color: Colors.white,
                           fontSize: 14,
@@ -297,15 +308,27 @@ class _HomePageState extends State<HomePage> {
                        ),
           
                   )
+
                 ],
 
                ),
-              )
+              
+              ),
+         
               ]
-
+             
             )
+            
           )
-        )    
+          
+        ),
+        bottomNavigationBar: banner == null
+        ? Container()
+        : Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          height: 50,
+          child: AdWidget(ad: banner!),
+        )
     );
           
   }

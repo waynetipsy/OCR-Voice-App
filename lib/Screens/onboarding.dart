@@ -80,9 +80,7 @@ class _OnboardingState extends State<Onboarding> {
                           curve: Curves.ease,
                            );
 
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
-                       builder: (context) => const HomePage(),
-                          ));
+                          Navigator.of(context).pushReplacementNamed('home');
                       },
                       style: ElevatedButton.styleFrom(
                          backgroundColor: Colors.black,
@@ -155,7 +153,7 @@ class DotIndicator extends StatelessWidget {
       ),
       
       Onboard(
-      image: "assets/pdf_files.png", 
+      image: "assets/pdf_onboard.png", 
       title: 'PDF Maker', 
       description: 'This app uses OCR technology to extract text and characters from photos, and digital camera-captured images. '
       ),

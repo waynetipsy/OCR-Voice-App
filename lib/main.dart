@@ -1,26 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ocr_voice_app/Model/ad_state.dart';
+import 'package:ocr_voice_app/Screens/recongnization_page.dart';
+import './Screens/readnote.dart';
 import 'package:ocr_voice_app/Screens/onboarding.dart';
+import 'package:ocr_voice_app/Screens/pdfmaker.dart';
+import 'package:ocr_voice_app/provider/read.provider.dart';
 import 'package:provider/provider.dart';
 import './Screens/homepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './provider/theme.provider.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 
 int? initScreen;
 Future<void> main() async{
-   
   WidgetsFlutterBinding.ensureInitialized();
+  final initFuture = MobileAds.instance.initialize();
+  final adState = AdState(initFuture);
   await SystemChrome.setPreferredOrientations([  //To force portrait and prevent orientation change
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
   
-   SharedPreferences prefs = await SharedPreferences.getInstance(); 
-  initScreen = await prefs.getInt("initScreen");
+  SharedPreferences prefs = await SharedPreferences.getInstance(); 
+  initScreen =  prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 2);
-  print('initScreen ${initScreen}');
+  print('initScreen ${'initScreen'}');
 
-  runApp(const MyApp());
+  runApp(
+    Provider.value(
+      value: adState,
+      builder: (context, child) => const MyApp(), 
+    ),
+    );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,26 +41,39 @@ class MyApp extends StatelessWidget {
 
   @override
 
-  Widget build(BuildContext context) =>
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
    ChangeNotifierProvider(
     create: (context) => ThemeProvider(),
-     builder: (context, _) {
-      final themeProvider = Provider.of<ThemeProvider>(context);
+   ),
 
+    ChangeNotifierProvider(
+    create: (context) => SpeakProvider(),
+   ),
+
+      
+      ],
+    builder: (context, child) {
     return MaterialApp(
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
-      themeMode: themeProvider.themeMode,
+      themeMode: Provider.of<ThemeProvider>(context).themeMode,
       debugShowCheckedModeBanner: false,
       home: const Onboarding(),
-     /* initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
+      initialRoute: initScreen == 0 || initScreen == null ? 'first' : 'home',
       routes: {
-        '/': (context) => const HomePage(),
-        "first":(context) => const Onboarding()  */
-      //},
+        'home': (context) => const HomePage(),
+        'first' :(context) => const Onboarding(),  
+        'pdf' :(context) => const PdfMarker(),
+        'read' :(context) => const ReadNote(),
+        'recognize' :(context) => const RecognizePage()
+      },
+          );
+        }   
       );
      }
-    );
+  
   }
 
 

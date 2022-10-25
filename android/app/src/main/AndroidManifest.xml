@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.flutter.ocr.ocr_voice_app">
+
    <application
         android:label="ocr_voice_app"
         android:name="${applicationName}"
@@ -36,5 +37,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7157999863984326~6025654270"/>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
