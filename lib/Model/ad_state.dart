@@ -14,11 +14,32 @@ class AdState {
     if(Platform.isAndroid) {
       return 'ca-app-pub-3940256099942544/6300978111';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/2934735716';
+      return '';
     }
     return null;
 }
+
+  
+  static String? get interstitialAdUnited {
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-3940256099942544/1033173712';
+    } else if (Platform.isIOS) {
+      return '';
+    }
+    return null;
+  }
+
+
+ /* static String? get rewardedAdUnitId {
+    if (Platform.isAndroid) {
+     return '';
+    } else if (Platform.isIOS) {
+      return '';
+    }
+    return null;
+  } */
  
+
  static final BannerAdListener bannerAdListener = BannerAdListener(
   
   onAdLoaded: (ad) => debugPrint('Ad loaded.'),

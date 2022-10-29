@@ -1,7 +1,7 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
+
 
 Future<String> imageCropperView(String? path, BuildContext context) async {
   CroppedFile? croppedFile = await ImageCropper().cropImage(
@@ -17,7 +17,7 @@ Future<String> imageCropperView(String? path, BuildContext context) async {
       AndroidUiSettings(
           toolbarTitle: 'Crop Image',
           toolbarColor: Colors.black,
-          toolbarWidgetColor: Colors.red,
+          toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
       IOSUiSettings(

@@ -28,7 +28,10 @@ class _ReadNoteState extends State<ReadNote> {
         elevation: 0,
         backgroundColor: Colors.black,
         title: const Text('Read Note',
-           style: TextStyle(color: Colors.red),
+           style: TextStyle(
+            color: Colors.red,
+            fontSize: 17,
+            ),
         ),
         actions: [
           IconButton(

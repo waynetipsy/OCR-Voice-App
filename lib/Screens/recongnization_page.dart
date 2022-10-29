@@ -34,7 +34,6 @@ class _RecognizePageState extends State<RecognizePage> {
     return Scaffold(
         //backgroundColor: Colors.grey[400],
         appBar: AppBar(
-          centerTitle: true,
           leading: IconButton(
             onPressed: () {
                  Navigator.push(
@@ -55,14 +54,28 @@ class _RecognizePageState extends State<RecognizePage> {
          },
          icon: const Icon(
           Icons.content_copy,
-          color: Colors.blue,
+          color: Colors.white,
              ),
              iconSize: 25,
             ),
+
+          IconButton(
+            onPressed: () {
+              
+            },
+          icon: Icon(Icons.save,
+        
+             color: Colors.blue,
+           ),
+           iconSize: 25,
+          ),
           ],
           backgroundColor: Colors.black,
           title: const Text("Extracted Text",
-           style: TextStyle(color: Colors.red),
+           style: TextStyle(color: Colors.red,
+           fontSize: 17
+        
+           ),
             ),
           ),
         body: _isBusy == true

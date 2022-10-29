@@ -5,7 +5,7 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = ocr_voice_app
+PRODUCT_NAME =  Text Genie;
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = com.flutter.ocr.ocrVoiceApp

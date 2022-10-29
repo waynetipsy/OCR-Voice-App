@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ocr_voice_app/Utilis/image_crooper_page.dart';
 
 import '../Screens/recongnization_page.dart';
 import '../Utilis/image_picker_class.dart';
@@ -40,8 +41,9 @@ class _AlertDialogOneState extends State<AlertDialogOne> {
                     
                        pickImage(source: ImageSource.camera).then((value) {
                           if(value != '') {
-                        
-                           Navigator.pushReplacement(
+                        imageCropperView(value, context).then((value) {
+                            if (value != '') {
+                               Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(
                             builder: (_) => RecognizePage(
@@ -50,6 +52,9 @@ class _AlertDialogOneState extends State<AlertDialogOne> {
                            ),
                       ),
                     );
+                            }
+                        });
+                          
                   }
                        });                },
               ),

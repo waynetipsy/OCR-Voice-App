@@ -64,13 +64,13 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/play_store.png"
-  adaptive_icon_background: "#FFFFFFFF"
-  adaptive_icon_foreground: "assets/app_icons.png"  
+  image_path: "assets/Genie_icon.png"
+  adaptive_icon_background: "#FF000000"
+  adaptive_icon_foreground: "assets/genie_ma.png"  
 
 flutter_native_splash:
-  background_image: "assets/splash_background.png"
-  image: "assets/splash_icon.png"
+  color:  "#01010a" 
+  image: "assets/Text_genien.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

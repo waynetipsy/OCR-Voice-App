@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+
 class ThemeProvider extends ChangeNotifier{
   ThemeMode themeMode = ThemeMode.system;
 
@@ -13,7 +14,8 @@ class ThemeProvider extends ChangeNotifier{
     }
   }
 
-  void toggleTheme(bool isOn   ) {
+  void toggleTheme(bool isOn) async {
+   // SharedPreferences prefs = await SharedPreferences.getInstance()
      themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
      notifyListeners();
   }
@@ -28,7 +30,7 @@ class MyThemes {
 
   
   static final lightTheme = ThemeData(
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: Colors.grey,
   colorScheme: const ColorScheme.light(),
   primaryColor: Colors.black,
   );

@@ -2,7 +2,7 @@
     package="com.flutter.ocr.ocr_voice_app">
 
    <application
-        android:label="ocr_voice_app"
+        android:label=" Text Genie"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -39,7 +39,7 @@
             android:value="2" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7157999863984326~6025654270"/>
+            android:value="ca-app-pub-7157999863984326~3768796644"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 
-
-   
 
 class AlertDialogThree extends StatefulWidget {
   const AlertDialogThree({super.key});

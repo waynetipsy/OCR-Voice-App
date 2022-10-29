@@ -13,7 +13,7 @@ import './provider/theme.provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 
-int? initScreen;
+int? initScreen; 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final initFuture = MobileAds.instance.initialize();
@@ -23,7 +23,7 @@ Future<void> main() async{
     DeviceOrientation.portraitDown,
   ]);
   
-  SharedPreferences prefs = await SharedPreferences.getInstance(); 
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen =  prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 2);
   print('initScreen ${'initScreen'}');

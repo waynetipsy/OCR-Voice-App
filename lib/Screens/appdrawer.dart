@@ -14,7 +14,7 @@ class AppDrawer extends StatelessWidget {
      
     return Drawer(
       elevation: 40,
-     
+    
       child: Column(
         children: [
           Container(
@@ -30,9 +30,9 @@ class AppDrawer extends StatelessWidget {
             ),
             alignment: Alignment.bottomLeft,
             child:  CircleAvatar(
-              radius: 35,
-              backgroundImage: AssetImage('assets/play_store.png'),
-              backgroundColor: Colors.white,
+              radius: 30,
+              backgroundImage: AssetImage('assets/app_barpic.png'),
+              backgroundColor: Colors.black,
               )
           ),
           ListTile(

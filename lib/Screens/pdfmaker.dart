@@ -64,7 +64,11 @@ class _PdfMarkerState extends State<PdfMarker> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: const Text("Pdf maker",
-          style: TextStyle(color: Colors.red),
+          style: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+            fontSize: 17
+            ),
           ),
           actions: [
             IconButton(
@@ -72,11 +76,13 @@ class _PdfMarkerState extends State<PdfMarker> {
               icon: const Icon(
                 Icons.image,
                 color: Colors.white,
+                size: 25,
                 ),
             ),
             IconButton(
               onPressed: getImagecam,
               icon: const Icon(Icons.camera,
+              size: 25,
               color: Colors.blue,
               ),
             ),
