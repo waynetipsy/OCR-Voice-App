@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:ocr_voice_app/Model/ad_state.dart';
+import 'package:ocr_voice_app/Screens/savedtext.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../Widgets/alertdialogone.dart';
@@ -18,10 +19,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   Future showToast(String message) async{
   await Fluttertoast.cancel();
 
   Fluttertoast.showToast(msg: message, fontSize: 18);
+  }
+
+  Widget labelDesign(Color color, String text) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
+      child: Text(
+        text,
+        
+        style: const TextStyle(fontSize: 15,
+        color: Colors.black
+        ),
+      ),
+      decoration: BoxDecoration(
+        boxShadow: [BoxShadow(color: color, blurRadius: 2, spreadRadius: 2)],
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.white,
+      ),
+    );
   }
 
   BannerAd?  _banner;
@@ -82,24 +103,32 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
        
       appBar: AppBar(
-        centerTitle: true,
-        title: Text('Text Genie ',
-        style: TextStyle(
-          color: Colors.red,
-          fontSize: 17,
-          fontWeight: FontWeight.bold,
-          ),
-        ),
+        actions: [
+          IconButton(
+            
+            color: Colors.blue,
+            onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+                builder: (_) => SavedText()
+                 ),
+                );
+            },
+            icon: Icon(
+              Icons.notification_important,
+              size: 27,
+              ),
+            )
+        ],
         backgroundColor: Colors.black,
         elevation: 0,
         
         ),
       drawer: const AppDrawer(),
 
-     /* floatingActionButton: 
+    /* floatingActionButton: 
         SpeedDial(
          animatedIcon: AnimatedIcons.menu_close,
-         backgroundColor: Colors.black,
+         backgroundColor: Colors.white,
          icon: Icons.home,
          overlayColor: Colors.black,
          overlayOpacity: 0.4,
@@ -107,24 +136,17 @@ class _HomePageState extends State<HomePage> {
          spaceBetweenChildren: 12,
          //closeManually: true,
          children: [
-          SpeedDialChild(
-            child: const Icon(Icons.share),
-            elevation: 30,
-            labelWidget: labelDesign(Colors.green, 'Share App'),
-            backgroundColor: Colors.green,
-            onTap: () {
-                Share.share(TextHelper.appUrl);
-            },
-          
-           ),
             SpeedDialChild(
-            child: const Icon(Icons.logout),
-            backgroundColor: Colors.amberAccent,
+            child: const Icon(Icons.text_fields),
+            backgroundColor: Colors.red,
             onTap: () {
-              SystemNavigator.pop();
+              Navigator.push(context, MaterialPageRoute(
+                builder: (_) => SavedText()
+                )
+                );
             },
-            labelWidget: labelDesign(Colors.blue, 'Close App'),
-            labelBackgroundColor: Colors.amber,
+            labelWidget: labelDesign(Colors.blue, 'Saved Text'),
+            labelBackgroundColor: Theme.of(context).primaryColor,
             
             )
           ],
@@ -181,7 +203,7 @@ class _HomePageState extends State<HomePage> {
                     )
                   ),
                 ),
-               const SizedBox(height: 30),
+               const SizedBox(height: 40),
                Expanded(
                 child: GridView.count(
                   shrinkWrap: true,
