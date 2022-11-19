@@ -26,6 +26,7 @@ class _RecognizePageState extends State<RecognizePage> {
 
    TextEditingController controller = TextEditingController();
   TextEditingController topic = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   
 
   @override
@@ -34,9 +35,7 @@ class _RecognizePageState extends State<RecognizePage> {
     final InputImage inputImage = InputImage.fromFilePath(widget.path!);
     processImage(inputImage);
 
-     }
-
-     
+     }   
 
  getDetails() {
    if(widget.note != null) {
@@ -66,7 +65,8 @@ class _RecognizePageState extends State<RecognizePage> {
             icon: const Icon(Icons.arrow_back),
           ),
           actions: [
-         IconButton(
+
+        IconButton(
           onPressed: () {
           FlutterClipboard.copy(controller.text);
           Fluttertoast.showToast(msg: 'Text copied');
@@ -75,8 +75,39 @@ class _RecognizePageState extends State<RecognizePage> {
           Icons.content_copy,
           color: Colors.white,
              ),
-             iconSize: 25,
+             iconSize: 24,
             ),
+
+        IconButton(
+          onPressed: ()async {
+          if(_formKey.currentState!.validate()) {
+           final title = topic.value.text;
+                   final description = controller.value.text;
+
+                 if(title.isEmpty || description.isEmpty){
+                    return;
+                     }
+            
+             Note model = 
+             Note(id: widget.note?.id, title: title, description: description);
+               if(widget.note == null) {
+                await DatabaseHelper.addNote(model);
+               
+               }
+                 Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) => SavedText()),
+                  );
+                  Fluttertoast.showToast(msg: 'Text saved');
+          }    
+          
+        }, 
+        icon: Icon(Icons.save,
+        color: Colors.blue,
+        
+        ),
+        iconSize: 25,
+        ),
+
 
           ],
           backgroundColor: Colors.black,
@@ -93,20 +124,25 @@ class _RecognizePageState extends State<RecognizePage> {
                   color: Theme.of(context).primaryColor,
                 ),
               )
-            : SingleChildScrollView(
+            :  SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
-                child: TextFormField(
+                child: Form(
+                   key: _formKey,
+                  child:TextFormField(
                   
-                  //validator: (input) => 
-                 //input!.trim().isEmpty ? 'Please enter title': null,
-                   //   onSaved: (input) => controller.text = input!,
-                  //   initialValue: controller.text,
-                    
+                  validator: (value) {
+                     if (value == null || value.isEmpty) {
+                       return 'Please enter title';
+                       }
+                         return null;
+                               },
+                      //onSaved: (input) => controller.text = input!,
+                   // initialValue: controller.text, 
                  // key: UniqueKey(),
                   keyboardType: TextInputType.text,
                   controller: topic,
@@ -124,6 +160,7 @@ class _RecognizePageState extends State<RecognizePage> {
                   ),
                   maxLines: 1,
                 ),
+              ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
@@ -146,43 +183,11 @@ class _RecognizePageState extends State<RecognizePage> {
                   maxLines: 22,
                 ),
               ),
-
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor,),
-                  onPressed: () async {
-                   
-                   final title = topic.value.text;
-                   final description = controller.value.text;
-                  // DateTime now = DateTime.now();
-                    //final DateFormat formattedDate = DateFormat('yyyy-MM-dd – kk:mm: a');
-                  // final String formatted = formattedDate.format(now);
-
-                 if(title.isEmpty || description.isEmpty){
-                    return;
-                     }
-            
-             Note model = 
-             Note(id: widget.note?.id, title: title, description: description);
-               if(widget.note == null) {
-                await DatabaseHelper.addNote(model);
-               
-               }
-                 Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) => SavedText()),
-                  );
-                  },
-                  child: Text('save'
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ]
+          ))),
+          
+          );     
          
-              );
   }
 
   void processImage(InputImage image) async {

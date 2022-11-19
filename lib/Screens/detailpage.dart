@@ -26,7 +26,7 @@ class _DetailPageState extends State<DetailPage> {
                 hintText:'Title'
                 ),
                 style: TextStyle(fontSize: 30.0),
-                initialValue: widget.note
+                
             )
           ],
         )

@@ -33,7 +33,7 @@ class DatabaseHelper{
    static Future<int> deleteNote(Note note) async {
       final db = await _getDB();
      return await db.delete(
-      "Note",
+      "Note", 
      where: 'id = ?',
      whereArgs: [note.id],
     );

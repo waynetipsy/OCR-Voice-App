@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ocr_voice_app/Screens/detailpage.dart';
 import 'package:ocr_voice_app/Screens/recongnization_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../Widgets/note_widget.dart';
 import  '../Model/data_model.dart';
 import 'package:ocr_voice_app/Model/database.dart';
@@ -63,10 +64,7 @@ class _SavedTextState extends State<SavedText> {
 
           title: const Text("Are you sure you want to delete text?"),
           content: const Text("Extracted text 📱"),
-
           actions: <Widget>[
-
-
             Padding(
               padding: const EdgeInsets.only(right: 10.0),
               child: MaterialButton(
@@ -76,12 +74,10 @@ class _SavedTextState extends State<SavedText> {
                 child: const Text("Yes"),
                 onPressed: () async{
                  await DatabaseHelper.deleteNote(
-                 snapshot.data![index]
-                 ); 
+                 snapshot.data![index]); 
+                  Fluttertoast.showToast(msg: 'Text deleted');
                  Navigator.pop(context);
-                setState(() {
-                   
-                });    
+                setState(() {});    
                   }
               ),
             ),
