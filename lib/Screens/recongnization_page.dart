@@ -37,6 +37,8 @@ class _RecognizePageState extends State<RecognizePage> {
 
      }   
 
+     
+
  getDetails() {
    if(widget.note != null) {
       controller.text = widget.note!.title;

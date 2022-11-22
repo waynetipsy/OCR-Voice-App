@@ -7,12 +7,12 @@ import '../Screens/recongnization_page.dart';
 class NoteWidget extends StatefulWidget {
   final Note note;
   final VoidCallback onTap;
-  final VoidCallback onLongpress;
+  final VoidCallback onLongPress;
   const NoteWidget({
     super.key,
     required this.note,
     required this.onTap,
-     required this.onLongpress,
+     required this.onLongPress,
   });
 
   @override
@@ -41,7 +41,7 @@ class _NoteWidgetState extends State<NoteWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onLongPress: widget.onLongpress,
+      onLongPress: widget.onLongPress,
       onTap: widget.onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 6),

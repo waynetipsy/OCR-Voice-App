@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ocr_voice_app/Screens/detailpage.dart';
 import 'package:ocr_voice_app/Screens/recongnization_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ocr_voice_app/Model/ad_state.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../Widgets/note_widget.dart';
 import  '../Model/data_model.dart';
 import 'package:ocr_voice_app/Model/database.dart';
@@ -15,7 +17,42 @@ class SavedText extends StatefulWidget {
 }
 
 class _SavedTextState extends State<SavedText> {
+
+   InterstitialAd? _interstitialAd;
   
+ @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _createInterstitialAd(); 
+  }
+  
+  void _createInterstitialAd() {
+      InterstitialAd.load(
+        adUnitId: AdState.interstitialAdUnited!,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) => _interstitialAd = ad,
+          onAdFailedToLoad: (error) => _interstitialAd = null,
+          )
+        );
+     }
+
+     void _showInterstitialAd () {
+      if (_interstitialAd != null) {
+        _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+          onAdDismissedFullScreenContent: (ad) {
+            ad.dispose();
+            _createInterstitialAd();
+          },
+          onAdFailedToShowFullScreenContent: (ad, error) {
+            ad.dispose();
+            _createInterstitialAd();
+          },
+        );
+        _interstitialAd!.show();
+        _interstitialAd = null;
+      }
+     }
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +85,12 @@ class _SavedTextState extends State<SavedText> {
                     note: snapshot.data![index],
                     ))
                  );
+                 _showInterstitialAd();
                  setState(() {
                    
                  });
               },
-              onLongpress: () async{
+              onLongPress: () async{
               showDialog(
                 context: context, 
               builder: (context) {
@@ -64,7 +102,7 @@ class _SavedTextState extends State<SavedText> {
 
           title: const Text("Are you sure you want to delete text?"),
           content: const Text("Extracted text 📱"),
-          actions: <Widget>[
+          actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10.0),
               child: MaterialButton(
@@ -74,7 +112,7 @@ class _SavedTextState extends State<SavedText> {
                 child: const Text("Yes"),
                 onPressed: () async{
                  await DatabaseHelper.deleteNote(
-                 snapshot.data![index]); 
+                 snapshot.data![index]);
                   Fluttertoast.showToast(msg: 'Text deleted');
                  Navigator.pop(context);
                 setState(() {});    
@@ -88,20 +126,23 @@ class _SavedTextState extends State<SavedText> {
               color: Colors.red,
               child: const Text("cancel"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
             ),
 
           ],
         );
-              } );
-              }
+            } 
+           );
+          }
               ),
               itemCount: snapshot.data!.length,
              );
             }
             return Center(
-              child: Text('No saved text'),
+              child: Text('No saved text',
+              style: TextStyle(color: Colors.white),
+              ),
             );
           }
         return SizedBox.shrink();
