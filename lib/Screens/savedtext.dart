@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ocr_voice_app/Screens/detailpage.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:ocr_voice_app/Screens/recongnization_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ocr_voice_app/Model/ad_state.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import '../Widgets/note_widget.dart';
 import  '../Model/data_model.dart';
 import 'package:ocr_voice_app/Model/database.dart';
 
@@ -19,13 +18,25 @@ class SavedText extends StatefulWidget {
 class _SavedTextState extends State<SavedText> {
 
    InterstitialAd? _interstitialAd;
-  
- @override
+   DBHelper? dbHelper;
+   late Future<List<NoteModel>> dataList;
+
+    @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _createInterstitialAd(); 
   }
   
+  @override
+  void initState() {
+    super.initState();
+    dbHelper = DBHelper();
+    loadData();
+  }
+  loadData()async {
+    dataList = dbHelper!.getDataList();
+  }
+
   void _createInterstitialAd() {
       InterstitialAd.load(
         adUnitId: AdState.interstitialAdUnited!,
@@ -36,7 +47,6 @@ class _SavedTextState extends State<SavedText> {
           )
         );
      }
-
      void _showInterstitialAd () {
       if (_interstitialAd != null) {
         _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
@@ -53,13 +63,14 @@ class _SavedTextState extends State<SavedText> {
         _interstitialAd = null;
       }
      }
+ 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Save Text',
+        title: Text('Saved Text',
         style: TextStyle(
           color: Colors.red,
           fontWeight: FontWeight.bold,
@@ -67,89 +78,131 @@ class _SavedTextState extends State<SavedText> {
           ),
         ),
       ),
-      body:  FutureBuilder<List<Note>?>(
-        future: DatabaseHelper.getAllNote(),
-        builder: (context, AsyncSnapshot<List<Note>?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator(),);
-          } else if(snapshot.hasError) {
-         return Center(child: Text(snapshot.error.toString()));
-          } else if (snapshot.hasData) {
-            if(snapshot.data != null) {
-          return ListView.builder(
-            itemBuilder: (context, index) => NoteWidget(
-              note: snapshot.data![index],
-              onTap: () async{
-                 await Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => DetailPage(
-                    note: snapshot.data![index],
-                    ))
-                 );
-                 _showInterstitialAd();
-                 setState(() {
-                   
-                 });
-              },
-              onLongPress: () async{
-              showDialog(
-                context: context, 
-              builder: (context) {
-               return  AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius:
-              BorderRadius.circular(20.0)
-              ),
-
-          title: const Text("Are you sure you want to delete text?"),
-          content: const Text("Extracted text 📱"),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: MaterialButton(
-                shape: const StadiumBorder(),
-                minWidth: 100,
-                color: Colors.blue,
-                child: const Text("Yes"),
-                onPressed: () async{
-                 await DatabaseHelper.deleteNote(
-                 snapshot.data![index]);
-                  Fluttertoast.showToast(msg: 'Text deleted');
-                 Navigator.pop(context);
-                setState(() {});    
-                  }
-              ),
-            ),
-
-            MaterialButton(
-              shape: const StadiumBorder(),
-              minWidth: 100,
-              color: Colors.red,
-              child: const Text("cancel"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-
-          ],
-        );
-            } 
-           );
-          }
-              ),
-              itemCount: snapshot.data!.length,
-             );
-            }
-            return Center(
-              child: Text('No saved text',
-              style: TextStyle(color: Colors.white),
-              ),
-            );
-          }
-        return SizedBox.shrink();
-        },
-        
-      ),
+      body:  Column(
+       children: [
+        Expanded(
+          child: FutureBuilder(
+            future: dataList,
+            builder: (context, AsyncSnapshot<List<NoteModel>> snapshot) {
+             if(!snapshot.hasData || snapshot.data == null) {
+              return Center(
+                child: CircularProgressIndicator()
+                );
+              
+             } 
+             else if (snapshot.data!.length == 0) {
+             return Center(
+              child: Text('No text found',
+             style: TextStyle(fontSize: 22,
+             fontWeight: FontWeight.bold,
+                 ),
+                ),
+              );
+             } else {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  int noteId = snapshot.data![index].id!.toInt();
+                  String noteTitle = snapshot.data![index].title.toString();
+                  String noteDesc = snapshot.data![index].desc.toString();
+                  String noteDT =
+                   snapshot.data![index].dateandtime.toString();
+                  return  InkWell(
+                    onTap: () {
+                     _showInterstitialAd();  
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Card(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            boxShadow: [BoxShadow(color: Colors.black,
+                            //blurRadius: 4, spreadRadius: 1
+                            )],
+                            color: Colors.white
+                            ),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                contentPadding: EdgeInsets.all(12),
+                                title: Padding(
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  child: Text(noteTitle, style: TextStyle(
+                                    fontSize: 19,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold
+                                  ),),
+                                  ),
+                                  subtitle: Text(noteDesc, style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey.shade800,
+                                    fontWeight: FontWeight.bold
+                                  ),),
+                              ),
+                              Divider(color: Colors.black,
+                              thickness: 0.8,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 10
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(noteDT,
+                                    
+                                    style: TextStyle(fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FontStyle.italic
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                    FlutterClipboard.copy(noteDesc); 
+                                    Fluttertoast.showToast(msg: 'Text copied');
+                                    },
+                                    icon: Icon(Icons.content_copy,
+                                    color: Colors.blue,
+                                    ),
+                                    iconSize: 27,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                         setState(() {
+                             dbHelper!.delete(noteId);  
+                             dataList = dbHelper!.getDataList();
+                             snapshot.data!.remove(snapshot.data![index]);
+                            Fluttertoast.showToast(msg: 'Saved text deleted');
+                          }); 
+                                      }, 
+                                      icon: Icon(Icons.delete,
+                                      color: Colors.red,
+                                      ),
+                                      iconSize: 27,
+                                      )
+                                  ],
+                                ),
+                                )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                    
+                }
+                );
+             }
+          })
+          )
+       ],
+    )
       );
-  }
-  
-}
+  }}

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:ocr_voice_app/Model/ad_state.dart';
-import 'package:ocr_voice_app/Screens/recongnization_page.dart';
-import './Screens/readnote.dart';
 import 'package:ocr_voice_app/Screens/onboarding.dart';
 import 'package:ocr_voice_app/Screens/pdfmaker.dart';
+import 'package:ocr_voice_app/Screens/recongnization_page.dart';
 import 'package:ocr_voice_app/provider/read.provider.dart';
-import 'package:provider/provider.dart';
+
 import './Screens/homepage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import './Screens/readnote.dart';
 import './provider/theme.provider.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 
 int? initScreen; 
@@ -67,7 +69,7 @@ class MyApp extends StatelessWidget {
         'first' :(context) => const Onboarding(),  
         'pdf' :(context) => const PdfMarker(),
         'read' :(context) => const ReadNote(),
-        'recognize' :(context) => const RecognizePage()
+        'recognize' :(context) => const RecognizePage(path: '',)
       },
           );
         }   

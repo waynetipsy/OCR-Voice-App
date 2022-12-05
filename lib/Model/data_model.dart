@@ -1,31 +1,31 @@
-class Note {
+class NoteModel {
   final int? id;
-  final String title;
- final String description;
+  final String? title;
+ final String? desc;
+ final String? dateandtime;
  //final DateTime time;
  
-  Note({
-   required this.id,
-    required  this.title,
-   required  this.description,
+  NoteModel({
+    this.id,
+   this.title,
+     this.desc,
+      this.dateandtime
     //required this.time
   });
 
-  factory Note.fromJson(Map<String, dynamic> json) {
-    return Note(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-     // time :json['time']
-    );
-  }
+  NoteModel.fromMap(Map<String, dynamic> res) 
+     :  id = res['id'],
+      title = res['title'],
+      desc = res['desc'],
+        dateandtime = res['dateandtime'];
 
-  Map<String, dynamic> toJson() => {
+  Map<String, Object?> toMap(){
+    return{
       'id' : id,
       'title' : title,
-      'description' : description,
-      //'time' : time,
+      'desc' : desc,
+      'dateandtime' : dateandtime,
     };
+   }
     
   }
-

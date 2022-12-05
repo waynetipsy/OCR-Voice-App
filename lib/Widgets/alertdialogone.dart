@@ -47,6 +47,7 @@ class _AlertDialogOneState extends State<AlertDialogOne> {
                             context,
                             CupertinoPageRoute(
                             builder: (_) => RecognizePage(
+                              
                              path: value,
                            
                            ),

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_label
+
 import 'dart:developer';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,10 +13,10 @@ import 'package:ocr_voice_app/Screens/homepage.dart';
 import 'package:ocr_voice_app/Screens/savedtext.dart';
 
 class RecognizePage extends StatefulWidget {
-  final Note? note;
   final String? path;
-  const RecognizePage({ this.path, this.note, Key? key}) : super(key: key);
 
+  const RecognizePage({ this.path, Key? key,}) : super(key: key);
+  
 
   @override
   State<RecognizePage> createState() => _RecognizePageState();
@@ -23,6 +25,8 @@ class RecognizePage extends StatefulWidget {
 
 class _RecognizePageState extends State<RecognizePage> {
   bool _isBusy = false;
+  DBHelper? dbHelper;
+  late Future<List<NoteModel>> dataList;
 
    TextEditingController controller = TextEditingController();
   TextEditingController topic = TextEditingController();
@@ -34,18 +38,13 @@ class _RecognizePageState extends State<RecognizePage> {
     super.initState();
     final InputImage inputImage = InputImage.fromFilePath(widget.path!);
     processImage(inputImage);
-
+    dbHelper = DBHelper();
+    loadData();
      }   
-
-     
-
- getDetails() {
-   if(widget.note != null) {
-      controller.text = widget.note!.title;
-      topic.text = widget.note!.description;
-      }
+ 
+ loadData() async{
+   dataList = dbHelper!.getDataList();
  }
-
      
   @override
 
@@ -89,24 +88,26 @@ class _RecognizePageState extends State<RecognizePage> {
                  if(title.isEmpty || description.isEmpty){
                     return;
                      }
-            
-             Note model = 
-             Note(id: widget.note?.id, title: title, description: description);
-               if(widget.note == null) {
-                await DatabaseHelper.addNote(model);
-               
-               }
-                 Navigator.pushReplacement(context, MaterialPageRoute(
+
+           dbHelper!.insert(NoteModel(
+            title: topic.text,
+            desc: controller.text,
+            dateandtime: DateFormat('yMd')
+            .add_jm()
+            .format(DateTime.now())
+            .toString()
+           ));     
+         
+           Navigator.pushReplacement(context, MaterialPageRoute(
                   builder: (context) => SavedText()),
                   );
                   Fluttertoast.showToast(msg: 'Text saved');
-          }    
-          
-        }, 
+          }
+        },
         icon: Icon(Icons.save,
         color: Colors.blue,
         
-        ),
+        ), 
         iconSize: 25,
         ),
 
