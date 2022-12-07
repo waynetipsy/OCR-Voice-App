@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class Onboarding extends StatefulWidget {
@@ -80,7 +81,7 @@ class _OnboardingState extends State<Onboarding> {
                           curve: Curves.ease,
                            );
 
-                          Navigator.of(context).pushReplacementNamed('home');
+                          Navigator.of(context).pushReplacementNamed('name');
                       },
                       style: ElevatedButton.styleFrom(
                          backgroundColor: Colors.black,
@@ -155,7 +156,7 @@ class DotIndicator extends StatelessWidget {
       Onboard(
       image: "assets/pdf_onboard.png", 
       title: 'PDF Maker', 
-      description: 'This app uses OCR technology to extract text and characters from photos, and digital camera-captured images. '
+      description: 'This app coverts camera image and gallery image to PDF files and you can share it to your friends. '
       ),
 
        Onboard(
@@ -191,7 +192,7 @@ class OnbordContent extends StatelessWidget {
         ),
        const SizedBox(height: 20),
         Text(description,
-        style: TextStyle(
+        style: GoogleFonts.roboto(
           fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clipboard/clipboard.dart';
-import 'package:ocr_voice_app/Screens/recongnization_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ocr_voice_app/Model/ad_state.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -133,13 +133,16 @@ class _SavedTextState extends State<SavedText> {
                                 contentPadding: EdgeInsets.all(12),
                                 title: Padding(
                                   padding: EdgeInsets.only(bottom: 10),
-                                  child: Text(noteTitle, style: TextStyle(
+                                  child: Text(
+                                    noteTitle, 
+                                    style: GoogleFonts.lato(
                                     fontSize: 19,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold
                                   ),),
                                   ),
-                                  subtitle: Text(noteDesc, style: TextStyle(
+                                  subtitle: Text(noteDesc, 
+                                  style: GoogleFonts.roboto(
                                     fontSize: 15,
                                     color: Colors.grey.shade800,
                                     fontWeight: FontWeight.bold

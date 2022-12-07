@@ -1,29 +1,41 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:ocr_voice_app/Model/ad_state.dart';
 import 'package:ocr_voice_app/Screens/savedtext.dart';
-import 'package:provider/provider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
+import '../Screens/appdrawer.dart';
 import '../Widgets/alertdialogone.dart';
 import '../Widgets/alertdialogtwo.dart';
-import '../Screens/appdrawer.dart';
-
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  
+  String? value;
+
+  HomePage({
+    Key? key,
+    this.value,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  String? back;
 
   Future showToast(String message) async{
   await Fluttertoast.cancel();
 
   Fluttertoast.showToast(msg: message, fontSize: 18);
+
+  
   }
 
   Widget labelDesign(Color color, String text) {
@@ -52,6 +64,7 @@ class _HomePageState extends State<HomePage> {
  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    getText();
     _createInterstitialAd();
     final adState = Provider.of<AdState>(context);
     adState.initialization.then((status) {
@@ -95,6 +108,14 @@ class _HomePageState extends State<HomePage> {
         _interstitialAd = null;
       }
      }
+
+   void getText() async{
+     final SharedPreferences pref = await SharedPreferences.getInstance();
+    back = pref.getString('text');
+    setState(() {
+      
+    });
+   }
 
     
   @override
@@ -181,17 +202,17 @@ class _HomePageState extends State<HomePage> {
                       height: 120,
                       child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                    children:const [
-                      Text('Hello...😊😉 ',
-                      style: TextStyle(
+                    children: [
+                      Text('Hello $back 😊',
+                      style: GoogleFonts.lato(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 18,
                         )
                       ),
                       SizedBox(height: 10),
                        Text('What feature do you want to use today?',
-                      style: TextStyle(
+                      style: GoogleFonts.roboto(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20,

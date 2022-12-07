@@ -58,7 +58,7 @@ class _RecognizePageState extends State<RecognizePage> {
                  Navigator.push(
                    context,
                CupertinoPageRoute(
-               builder: (_) => const HomePage(
+               builder: (_) =>  HomePage(
                            ),
                       ),
                     );
@@ -151,12 +151,16 @@ class _RecognizePageState extends State<RecognizePage> {
                   controller: topic,
                   //enabled: widget.deleteNote == null,
                   decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      
+                    ),
                     labelText: 'Enter title',
                     hintText: 'Your title',
                     border: OutlineInputBorder(
                       borderSide: const BorderSide(
                         width: 0.75,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -173,12 +177,16 @@ class _RecognizePageState extends State<RecognizePage> {
                   keyboardType: TextInputType.text,
                   controller: controller,
                   decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: 
+                      BorderSide(color: Colors.white)
+                    ),
                     labelText: 'Extracted text',
                     hintText: 'Your body',
                     border: OutlineInputBorder(
                       borderSide: const BorderSide(
                         width: 0.75,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
