@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ocr_voice_app/Utilis/image_crooper_page.dart';
-
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import '../Model/ad_state.dart';
 import '../Screens/recongnization_page.dart';
 import '../Utilis/image_picker_class.dart';
    
@@ -15,6 +17,48 @@ class AlertDialogOne extends StatefulWidget {
 }
 
 class _AlertDialogOneState extends State<AlertDialogOne> {
+   InterstitialAd? _interstitialAd;
+
+    @override
+   void didChangeDependencies() {
+    super.didChangeDependencies();
+    _createInterstitialAd(); 
+  }
+  
+  @override
+  void initState() {
+    super.initState();
+  }
+  
+
+  void _createInterstitialAd() {
+      InterstitialAd.load(
+        adUnitId: AdState.interstitialAdUnited!,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) => _interstitialAd = ad,
+          onAdFailedToLoad: (error) => _interstitialAd = null,
+          )
+        );
+     }
+     void _showInterstitialAd () {
+      if (_interstitialAd != null) {
+        _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+          onAdDismissedFullScreenContent: (ad) {
+            ad.dispose();
+            _createInterstitialAd();
+          },
+          onAdFailedToShowFullScreenContent: (ad, error) {
+            ad.dispose();
+            _createInterstitialAd();
+          },
+        );
+        _interstitialAd!.show();
+        _interstitialAd = null;
+      }
+     }
+ 
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -24,8 +68,12 @@ class _AlertDialogOneState extends State<AlertDialogOne> {
               BorderRadius.circular(20.0)
               ),
 
-          title: const Text("Do you want to access camera?"),
-          content: const Text("Phone Camera 📷"),
+          title: Text("Do you want to access camera?",
+          style: GoogleFonts.lato(fontSize: 22),
+          ),
+          content: Text("Phone Camera 📷",
+           style: GoogleFonts.lato(fontSize: 14),
+          ),
 
           actions: <Widget>[
 
@@ -68,6 +116,7 @@ class _AlertDialogOneState extends State<AlertDialogOne> {
               child: const Text("cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
+                 _showInterstitialAd();
               },
             ),
 

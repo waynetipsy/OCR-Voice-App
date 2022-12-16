@@ -71,7 +71,7 @@ class _SavedTextState extends State<SavedText> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('Saved Text',
-        style: TextStyle(
+        style: GoogleFonts.lato(
           color: Colors.red,
           fontWeight: FontWeight.bold,
           fontSize: 17,
@@ -92,8 +92,8 @@ class _SavedTextState extends State<SavedText> {
              } 
              else if (snapshot.data!.length == 0) {
              return Center(
-              child: Text('No text found',
-             style: TextStyle(fontSize: 22,
+              child: Text('No saved text found😔',
+             style: GoogleFonts.lato(fontSize: 22,
              fontWeight: FontWeight.bold,
                  ),
                 ),
@@ -142,7 +142,7 @@ class _SavedTextState extends State<SavedText> {
                                   ),),
                                   ),
                                   subtitle: Text(noteDesc, 
-                                  style: GoogleFonts.roboto(
+                                  style: GoogleFonts.lato(
                                     fontSize: 15,
                                     color: Colors.grey.shade800,
                                     fontWeight: FontWeight.bold
@@ -160,7 +160,7 @@ class _SavedTextState extends State<SavedText> {
                                   children: [
                                     Text(noteDT,
                                     
-                                    style: TextStyle(fontSize: 14,
+                                    style: GoogleFonts.lato(fontSize: 14,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w500,
                                     fontStyle: FontStyle.italic
@@ -182,8 +182,9 @@ class _SavedTextState extends State<SavedText> {
                              dbHelper!.delete(noteId);  
                              dataList = dbHelper!.getDataList();
                              snapshot.data!.remove(snapshot.data![index]);
-                            Fluttertoast.showToast(msg: 'Saved text deleted');
-                          }); 
+                             Fluttertoast.showToast(msg: 'Saved text deleted');
+                                  _showInterstitialAd();
+                                 }); 
                                       }, 
                                       icon: Icon(Icons.delete,
                                       color: Colors.red,

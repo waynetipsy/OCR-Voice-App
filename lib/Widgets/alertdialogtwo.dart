@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ocr_voice_app/Utilis/image_crooper_page.dart';
 
@@ -15,6 +16,7 @@ class AlertDialogTwo extends StatefulWidget {
 }
 
 class _AlertDialogTwoState extends State<AlertDialogTwo> {
+  
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -23,8 +25,12 @@ class _AlertDialogTwoState extends State<AlertDialogTwo> {
               BorderRadius.circular(20.0)
               ),
 
-          title: const Text("Do you want to access gallery?"),
-          content: const Text("Phone Gallery 🖼️"),
+          title:  Text("Do you want to access gallery?",
+          style: GoogleFonts.lato(fontSize: 22),
+          ),
+          content:  Text("Phone Gallery 🖼️",
+          style: GoogleFonts.lato(fontSize: 14),
+          ),
 
           actions: <Widget>[
 
@@ -72,6 +78,7 @@ class _AlertDialogTwoState extends State<AlertDialogTwo> {
               child: const Text("cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
+      
               },
             ),
 

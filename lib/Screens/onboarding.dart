@@ -125,8 +125,8 @@ class DotIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      height: isActive ? 22 : 12,
-      width: 6,
+      height: isActive ? 20 : 10,
+      width: 1,
       decoration: BoxDecoration(
         color: isActive ? Colors.white :
         Colors.black,
@@ -146,23 +146,24 @@ class DotIndicator extends StatelessWidget {
   });
   }
 
+  // ignore: non_constant_identifier_names
   final List<Onboard> demo_data = [
     Onboard(
       image: "assets/camera_pic.png" ,
-      title: 'Optical Character Recognition', 
+      title: 'Extract characters from image', 
       description: ' This app uses OCR technology to extract text and characters from photos, and digital camera-captured images. '
       ),
       
       Onboard(
       image: "assets/pdf_onboard.png", 
-      title: 'PDF Maker', 
-      description: 'This app coverts camera image and gallery image to PDF files and you can share it to your friends. '
+      title: 'Convert Image to PDF file', 
+      description: 'This app converts images from the camera and gallery to PDF files, and you can share them with your family and friends '
       ),
 
        Onboard(
       image: "assets/loud.png", 
       title: 'Text to Speech', 
-      description: 'This app converts your Pdf documents and text documents to audio. Enjoy and listen to your favorite Pdf document and text while sleeping or on the road. '
+      description: 'This app converts your Pdf documents and text documents to audio. Enjoy and listen to your favorite Pdf document and text while working or on the road. '
       ),
   ];
 
@@ -186,13 +187,18 @@ class OnbordContent extends StatelessWidget {
         height: 250,
         ),
        const SizedBox(height: 25),
-      Text(title,
+      Text(
+        title,
       style: Theme.of(context).textTheme.headline5!
-      .copyWith(fontWeight: FontWeight.w500),
+      .copyWith(fontWeight: FontWeight.w500,
+      color: Colors.black
+      ),
+      textAlign: TextAlign.center,
+      
         ),
-       const SizedBox(height: 20),
+       const SizedBox(height: 40),
         Text(description,
-        style: GoogleFonts.roboto(
+        style: GoogleFonts.lato(
           fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
         ),

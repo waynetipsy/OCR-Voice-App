@@ -105,12 +105,12 @@ class _NamePageState extends State<NamePage> {
                     CircularProgressIndicator(color: Colors.blue,),
                   SizedBox(width: 24,),
                   Text('Please Wait...', 
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.lato(color: Colors.black),
                   )
                    ]
                   )
                    : Text('Get Started', 
-                   style: TextStyle(color: Colors.black),
+                   style: GoogleFonts.lato(color: Colors.black),
                    )
                     ),
                 )

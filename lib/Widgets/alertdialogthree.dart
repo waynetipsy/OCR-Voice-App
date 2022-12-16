@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class AlertDialogThree extends StatefulWidget {
@@ -18,8 +19,12 @@ class _AlertDialogThreeState extends State<AlertDialogThree> {
               BorderRadius.circular(20.0)
               ),
 
-          title: const Text("Do you want to close this App?"),
-          content: const Text("Text deck App 📱"),
+          title:  Text("Do you want to close this App?",
+          style: GoogleFonts.lato(fontSize: 22)
+          ),
+          content:  Text("Text Genie📱",
+          style: GoogleFonts.lato(fontSize: 14),
+          ),
 
           actions: <Widget>[
 

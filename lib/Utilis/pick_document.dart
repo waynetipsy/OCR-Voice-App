@@ -11,9 +11,7 @@ Future<String> pickDocument() async {
    if (result != null) {
   final String? files = result.files.single.path;
      return files!;
-      
-      
-   }else{
-    return 'Error ocurred';
+      }else{
+    return '';
    }
 }

@@ -1,4 +1,6 @@
 
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -130,9 +132,10 @@ class _HomePageState extends State<HomePage> {
             color: Colors.blue,
             onPressed: () {
             Navigator.push(context, MaterialPageRoute(
-                builder: (_) => SavedText()
+                builder: (_) => SavedText(),
                  ),
                 );
+               _showInterstitialAd();
             },
             icon: Icon(
               Icons.save_rounded,
@@ -146,32 +149,6 @@ class _HomePageState extends State<HomePage> {
         ),
       drawer: const AppDrawer(),
 
-    /* floatingActionButton: 
-        SpeedDial(
-         animatedIcon: AnimatedIcons.menu_close,
-         backgroundColor: Colors.white,
-         icon: Icons.home,
-         overlayColor: Colors.black,
-         overlayOpacity: 0.4,
-         spacing: 20,
-         spaceBetweenChildren: 12,
-         //closeManually: true,
-         children: [
-            SpeedDialChild(
-            child: const Icon(Icons.text_fields),
-            backgroundColor: Colors.red,
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (_) => SavedText()
-                )
-                );
-            },
-            labelWidget: labelDesign(Colors.blue, 'Saved Text'),
-            labelBackgroundColor: Theme.of(context).primaryColor,
-            
-            )
-          ],
-        ),  */
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.all(20.0),
@@ -183,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Card(
                     shadowColor: Colors.black,
-                    elevation: 8,
+                    elevation: 8,  
                     clipBehavior: Clip.antiAlias,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -207,12 +184,12 @@ class _HomePageState extends State<HomePage> {
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 15,
                         )
                       ),
                       SizedBox(height: 10),
                        Text('What feature do you want to use today?',
-                      style: GoogleFonts.roboto(
+                      style: GoogleFonts.lato(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20,
@@ -255,14 +232,14 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                          padding: const EdgeInsets.all(23),
                           child: Column(
-                            children: const [
+                            children: [
                               Icon(Icons.image,
                               color: Colors.white,
                               size: 65,
                               ),
                         SizedBox(height: 15,),
                               Text("Image to Text ",
-                          style: TextStyle(color: Colors.white,
+                          style: GoogleFonts.lato(color: Colors.white,
                           fontSize: 14,
                         fontWeight: FontWeight.bold
                             ),
@@ -298,14 +275,14 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                          padding: const EdgeInsets.all(23),
                         child: Column(
-                          children: const [
+                          children: [
                             Icon(CupertinoIcons.camera,
                             color: Colors.white,
                             size: 65,
                             ),
                       SizedBox(height: 15,),
                             Text("Camera to Text ",
-                        style: TextStyle(color: Colors.white,
+                        style: GoogleFonts.lato(color: Colors.white,
                         fontSize: 14,
                       fontWeight: FontWeight.bold
                         
@@ -334,14 +311,14 @@ class _HomePageState extends State<HomePage> {
                       child: Container(
                       padding: const EdgeInsets.all(23),
                         child: Column(
-                          children: const [
+                          children:  [
                             Icon(Icons.file_copy,
                             color: Colors.white,
                             size: 65,
                             ),
                       SizedBox(height: 15,),
                             Text("Image to Pdf",
-                        style: TextStyle(color: Colors.white,
+                        style: GoogleFonts.lato(color: Colors.white,
                         fontSize: 14,
                       fontWeight: FontWeight.bold
                         
@@ -368,14 +345,14 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                           padding: const EdgeInsets.all(23),
                           child: Column(
-                            children: const [
+                            children:  [
                               Icon(Icons.mic,
                               color: Colors.white,
                               size: 65,
                               ),
                              SizedBox(height: 15,),
                               Text("Text to Sound",
-                          style: TextStyle(color: Colors.white,
+                          style: GoogleFonts.lato(color: Colors.white,
                           fontSize: 14,
                             fontWeight: FontWeight.bold
                           

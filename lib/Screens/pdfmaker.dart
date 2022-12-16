@@ -1,7 +1,11 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:bulleted_list/bulleted_list.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -63,8 +67,8 @@ class _PdfMarkerState extends State<PdfMarker> {
       
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: const Text("Pdf maker",
-          style: TextStyle(
+          title:  Text("Pdf Creator",
+          style: GoogleFonts.lato(
             color: Colors.red,
             fontWeight: FontWeight.bold,
             fontSize: 17
@@ -89,9 +93,31 @@ class _PdfMarkerState extends State<PdfMarker> {
           ],
         ),
         body: file == null
-            ? Container(
-            
-            )
+            ? ExpansionTile(
+              title: Text('How to create PDF file'),
+              children: [
+                Container(
+                  color: Colors.black,
+                  height: 200,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        BulletedList(
+                          bulletColor: Colors.blue,
+                          listItems: [
+                            'Convert your image to PDF file.',
+                            'Use first icon on app bar for gallery.',
+                            'Use second icon on app bar for camera.',
+                            'Download PDF file, print or share via socials.'
+                          ]
+                        
+                          )
+                      ],
+                    )
+                    ),
+                )
+              ],
+              )
             : PdfPreview(
                 build: (format) => _generatePdf(format, file),
               ),

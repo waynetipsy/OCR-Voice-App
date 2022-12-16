@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/cupertino.dart';
 import '../Widgets/alertdialogthree.dart';
@@ -42,7 +43,7 @@ class AppDrawer extends StatelessWidget {
             },
             title: Text(
               'Main Menu',
-              style: TextStyle(
+              style: GoogleFonts.lato(
                 color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold,
               fontSize: 17
@@ -59,7 +60,7 @@ class AppDrawer extends StatelessWidget {
             },
             title:  Text(
               'App Theme',
-              style: TextStyle(
+              style: GoogleFonts.lato(
                 color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold,
               fontSize: 17),
@@ -72,7 +73,7 @@ class AppDrawer extends StatelessWidget {
             },
             title: Text(
               'Share App',
-              style: TextStyle(
+              style:  GoogleFonts.lato(
                 color:  Theme.of(context).primaryColor,
               fontSize: 17,
                fontWeight: FontWeight.bold),
@@ -95,7 +96,7 @@ class AppDrawer extends StatelessWidget {
             },
             title: Text(
               'Close App',
-              style: TextStyle(
+              style: GoogleFonts.lato(
                 color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold,
                fontSize: 17

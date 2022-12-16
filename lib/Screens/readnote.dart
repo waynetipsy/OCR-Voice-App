@@ -35,7 +35,7 @@ class _ReadNoteState extends State<ReadNote> {
         ),
         actions: [
           IconButton(
-            iconSize: 2,
+            iconSize: 25,
             color: Colors.red,
             onPressed: (){
             controller.clear();

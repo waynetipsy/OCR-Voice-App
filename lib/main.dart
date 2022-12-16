@@ -9,11 +9,11 @@ import 'package:ocr_voice_app/Screens/onboarding.dart';
 import 'package:ocr_voice_app/Screens/pdfmaker.dart';
 import 'package:ocr_voice_app/Screens/recongnization_page.dart';
 import 'package:ocr_voice_app/provider/read.provider.dart';
-import './Screens/namepage.dart';
+
 import './Screens/homepage.dart';
+import './Screens/namepage.dart';
 import './Screens/readnote.dart';
 import './provider/theme.provider.dart';
-
 
 int? initScreen; 
 Future<void> main() async{
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
       themeMode: Provider.of<ThemeProvider>(context).themeMode,
       debugShowCheckedModeBanner: false,
       home: const Onboarding(),
-     initialRoute: initScreen == 0 || initScreen == null ? 'first' : 'home',
+      initialRoute: initScreen == 0 || initScreen == null ? 'first' : 'home',
       routes: {
         'home': (context) =>  HomePage(),
         'name' :(context) => const NamePage(),
